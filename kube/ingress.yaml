@@ -7,7 +7,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /api
+          - path: /api/sentiment
             pathType: Prefix
             backend:
               service:
