@@ -2,10 +2,14 @@ apiVersion: v1
 kind: Service
 metadata:
   name: sentiment-api-service
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+    prometheus.io/path: "/actuator/prometheus"
 spec:
-  type: LoadBalancer
   selector:
     app: sentiment-api
+  type: LoadBalancer
   ports:
     - port: 80
       targetPort: 8080
