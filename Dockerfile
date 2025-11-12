@@ -1,10 +1,10 @@
-# Используем JDK 21 (совместим с Spring Boot 3.x)
-FROM eclipse-temurin:21-jdk-jammy
-
+FROM eclipse-temurin:17-jdk AS builder
 WORKDIR /app
+COPY . .
+RUN ./mvnw clean package -DskipTests
 
-# Копируем JAR
-COPY target/*.jar app.jar
-
-# Запускаем приложение
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+COPY --from=builder /app/target/sentiment-api-1.0.0.jar app.jar
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
