@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sentiment-api-ingress
+  annotations:
+    ingressClassName: nginx
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: sentiment-api-service
+                port:
+                  number: 80
