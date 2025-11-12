@@ -2,15 +2,24 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: sentiment-api-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
-  ingressClassName: nginx
   rules:
-    - http:
+    - host: example.local
+      http:
         paths:
-          - path: /api/sentiment
+          - path: /actuator(/|$)(.*)
             pathType: Prefix
             backend:
               service:
                 name: sentiment-api-service
                 port:
-                  number: 80
+                  number: 8080
+          - path: /api/sentiment(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: sentiment-api-service
+                port:
+                  number: 8080
