@@ -17,7 +17,7 @@ spec:
       containers:
         - name: sentiment-api
           image: sentiment-api:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           resources:
